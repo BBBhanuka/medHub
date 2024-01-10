@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="ListViewLT" type="id" />
+    <item name="listViewCart" type="id" />
+    <item name="listViewOD" type="id" />
+    <item name="listViewBM" type="id" />
+</resources>
