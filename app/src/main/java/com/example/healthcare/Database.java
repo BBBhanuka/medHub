@@ -29,8 +29,13 @@ public class Database extends SQLiteOpenHelper {
         String appointmentTableQry = "CREATE TABLE APPOINTMENT(APPID INTEGER PRIMARY KEY AUTOINCREMENT,FULLNAME TEXT,ADDRESS TEXT,CONTACTNUMBER TEXT,REPORTS TEXT,USERNAME TEXT, DATE TEXT, TIME TEXT)";
         sqLiteDatabase.execSQL(appointmentTableQry);
 
-        String orderTableQry = "create table orders(FULLNAME text,ADDRESS text,CONTACTNO text,USERNAME text)";
+        String orderTableQry = "CREATE TABLE ORDERS(FULLNAME TEXT,ADDRESS TEXT,CONTACTNO TEXT,USERNAME TEXT)";
         sqLiteDatabase.execSQL(orderTableQry);
+
+        String tempOrderTableQry = "CREATE TABLE TEMP_ORDER(ID INTEGER PRIMARY KEY AUTOINCREMENT,MEDNAME TEXT,QTY INTEGER, PRICE TEXT)";
+        sqLiteDatabase.execSQL(tempOrderTableQry);
+
+
     }
 
     @Override
@@ -87,6 +92,61 @@ public class Database extends SQLiteOpenHelper {
         else
             return true;
     }
+
+
+
+    public boolean addToCart(String medName, int medQty, float medPrice) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("MEDNAME", medName);
+        contentValues.put("QTY", medQty);
+        contentValues.put("PRICE", medPrice);
+
+        long result = db.insert("TEMP_ORDER", null, contentValues);
+
+        if (result == -1)
+            return false;
+        else
+            return true;
+    }
+
+
+    public boolean checkCartforItem(String medName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor result = db.query("TEMP_ORDER", new String[]{"MEDNAME"}, "MEDNAME = ?", new String[]{medName}, null, null, null);
+
+        if (result.getCount() != 0) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public boolean clearTempDB() {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        try {
+            db.execSQL("DELETE FROM TEMP_ORDER");
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return  false;
+        } finally {
+            db.close();
+        }
+
+    }
+
+
+    public Cursor getAlreadyAddedCount(String medName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor result = db.query("TEMP_ORDER", new String[]{"MEDNAME" , "QTY"}, "MEDNAME = ?", new String[]{medName}, null, null, null);
+
+        return  result;
+    }
+
+
 
 
 //    private String getUsername() {

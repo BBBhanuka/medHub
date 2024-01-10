@@ -88,12 +88,27 @@
         tools:ignore="UnknownIdInLayout" />
 
     <Button
+        android:id="@+id/buttonClear"
+        android:layout_width="101dp"
+        android:layout_height="37dp"
+        android:background="#FF0404"
+        android:backgroundTintMode="add"
+        android:text="Clear Cart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.042"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.912"
+        tools:ignore="UnknownIdInLayout" />
+
+    <Button
         android:id="@+id/buttonBMCartCheckout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="60dp"
         android:background="@drawable/btn_bg"
-        android:text="ADD TO CART"
+        android:text="Add to cart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

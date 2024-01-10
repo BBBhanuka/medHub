@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -38,12 +39,23 @@ public class BuyMedicineDetailsActivity extends AppCompatActivity {
         btnAddToCart = findViewById(R.id.buttonBMCartCheckout);
         totalCost = findViewById(R.id.textViewMedTotalCost);
         medQuantity = findViewById(R.id.editTextQuantity);
+        Button truncate = findViewById(R.id.buttonClear);
+
+
+        truncate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Database db = new Database(getApplicationContext());
+                boolean actionOK = db.clearTempDB();
+                if(actionOK) {
+                    Toast.makeText(getApplicationContext(), "Successfully Cleared db", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         Intent intent = getIntent();
-
         int intMedPrice = Integer.parseInt(intent.getStringExtra("medPrice"));
-
-
+        String strMedName =  intent.getStringExtra("medName");
 
         try {
 
@@ -57,11 +69,9 @@ public class BuyMedicineDetailsActivity extends AppCompatActivity {
         }
 
 
-
         tvPackageName.setText(intent.getStringExtra("medName"));
         edDetails.setText(intent.getStringExtra("medDescription"));
         tvTotalCost.setText("Unit Price : " + intMedPrice + "/-");
-
 
         medQuantity.addTextChangedListener(new TextWatcher() {
             @Override
@@ -106,13 +116,53 @@ public class BuyMedicineDetailsActivity extends AppCompatActivity {
         btnAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                SharedPreferences sharedPreferences = getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
-//                String username = sharedPreferences.getString("username", "").toString();
-//                String product = tvPackageName.getText().toString();
-//                float price = Float.parseFloat(intent.getStringExtra("text3").toString());
 
-//                Database db = new Database(getApplicationContext());
-//
+
+                try {
+                    int intMedQuantity = Integer.parseInt(medQuantity.getText().toString());
+                    Database db = new Database(getApplicationContext());
+
+                    boolean isAlreadyAdded = db.checkCartforItem(strMedName);
+
+                    if(isAlreadyAdded) {
+
+//                        Toast.makeText(getApplicationContext(), "Item Already Added !!!", Toast.LENGTH_SHORT).show();
+
+                        Cursor count = db.getAlreadyAddedCount(strMedName);
+
+                        if(count.moveToFirst()) {
+                            int quantity = count.getInt(count.getColumnIndex("QTY"));
+                            Toast.makeText(getApplicationContext(), String.valueOf(quantity), Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+
+                    else {
+                        boolean isAdded =  db.addToCart(strMedName,Integer.parseInt(medQuantity.getText().toString()),Float.parseFloat(Integer.toString(intMedPrice)));
+
+                        if(isAdded) {
+                            Toast.makeText(getApplicationContext(), "Added Success", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+
+                        else {
+                            Toast.makeText(getApplicationContext(), "Error in Adding item", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+
+
+
+
+                }
+
+                catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+
+
+
 //                if (db.checkCart(username, product) == 1) {
 //                    Toast.makeText(getApplicationContext(), "Product Already Added", Toast.LENGTH_SHORT).show();
 //                } else {
