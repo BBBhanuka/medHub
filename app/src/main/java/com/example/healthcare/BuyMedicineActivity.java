@@ -82,18 +82,15 @@ public class BuyMedicineActivity extends AppCompatActivity {
         list = new ArrayList();
         for (int i=0;i<packages.length;i++){
             item = new HashMap<String,String>();
-            item.put("line1",packages[i][0]);
-            item.put("line2",packages[i][1]);
-            item.put("line3",packages[i][2]);
-            item.put("line4",packages[i][3]);
-            item.put("line5","Total Cost:"+packages[i][4]+"/-");
+            item.put("medName",packages[i][0]);
+            item.put("medPrice","Total Cost:"+packages[i][4]+"/-");
             list.add(item);
         }
 
         sa = new SimpleAdapter(this,list,
                 R.layout.multi_lines,
-                new String[]{"line1","line2","line3","line4","line5"},
-                new int[]{R.id.line_a,R.id.line_b,R.id.line_c,R.id.line_d,R.id.line_e});
+                new String[]{"medName","medPrice"},
+                new int[]{R.id.line_a,R.id.line_e});
         lst.setAdapter(sa);
 
         lst.setOnItemClickListener(new AdapterView.OnItemClickListener() {

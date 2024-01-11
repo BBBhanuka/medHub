@@ -1,9 +1,11 @@
 package com.example.healthcare;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -19,11 +21,11 @@ import android.widget.Toast;
 
 public class BuyMedicineDetailsActivity extends AppCompatActivity {
 
-    TextView tvPackageName,tvTotalCost, totalCost;
+    TextView tvPackageName, tvTotalCost, totalCost;
     TextView edDetails;
 
     EditText medQuantity;
-    Button btnBack,btnAddToCart;
+    Button btnBack, btnAddToCart;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -47,7 +49,7 @@ public class BuyMedicineDetailsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Database db = new Database(getApplicationContext());
                 boolean actionOK = db.clearTempDB();
-                if(actionOK) {
+                if (actionOK) {
                     Toast.makeText(getApplicationContext(), "Successfully Cleared db", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -55,21 +57,20 @@ public class BuyMedicineDetailsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         int intMedPrice = Integer.parseInt(intent.getStringExtra("medPrice"));
-        String strMedName =  intent.getStringExtra("medName");
+        String strMedName = intent.getStringExtra("medName");
 
         try {
 
-            if(medQuantity.getText().toString().isEmpty()) {
+            if (medQuantity.getText().toString().isEmpty()) {
                 totalCost.setText("Enter Quantity");
             }
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
 
-        tvPackageName.setText(intent.getStringExtra("medName"));
+        tvPackageName.setText(strMedName);
         edDetails.setText(intent.getStringExtra("medDescription"));
         tvTotalCost.setText("Unit Price : " + intMedPrice + "/-");
 
@@ -85,16 +86,14 @@ public class BuyMedicineDetailsActivity extends AppCompatActivity {
 
                 try {
 
-                    if(medQuantity.getText().toString().isEmpty()) {
+                    if (medQuantity.getText().toString().isEmpty()) {
                         totalCost.setText("Enter Quantity");
-                    }
-                    else {
+                    } else {
                         int intMedQuantity = Integer.parseInt(medQuantity.getText().toString());
                         totalCost.setText("Total Cost : " + intMedPrice * intMedQuantity);
                     }
 
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
@@ -124,43 +123,67 @@ public class BuyMedicineDetailsActivity extends AppCompatActivity {
 
                     boolean isAlreadyAdded = db.checkCartforItem(strMedName);
 
-                    if(isAlreadyAdded) {
-
-//                        Toast.makeText(getApplicationContext(), "Item Already Added !!!", Toast.LENGTH_SHORT).show();
+                    if (isAlreadyAdded) {
 
                         Cursor count = db.getAlreadyAddedCount(strMedName);
+                        if (count.moveToFirst()) {
 
-                        if(count.moveToFirst()) {
                             int quantity = count.getInt(count.getColumnIndex("QTY"));
-                            Toast.makeText(getApplicationContext(), String.valueOf(quantity), Toast.LENGTH_SHORT).show();
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(BuyMedicineDetailsActivity.this);
+
+                            // Set the message show for the Alert time
+                            builder.setMessage("Item already in cart.\nOld Quantity : " + quantity + "\nNew Quantity : " + intMedQuantity + "\nUpdate Quantity ?");
+
+                            // Set Alert Title
+                            builder.setTitle("Warning !");
+
+                            // Set Cancelable false for when the user clicks on the outside the Dialog Box then it will remain show
+                            builder.setCancelable(false);
+
+                            // Set the positive button with yes name Lambda OnClickListener method is use of DialogInterface interface.
+                            builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
+
+                                // When the user click yes button then table will clear
+
+                                boolean isUpdated = db.updateAddedQTY(strMedName, Integer.parseInt(medQuantity.getText().toString()));
+
+                                if (isUpdated) {
+                                    Toast.makeText(getApplicationContext(), "Quantity Update Success", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Error in Update Quantity", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                            // Set the Negative button with No name Lambda OnClickListener method is use of DialogInterface interface.
+                            builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
+                                // If user click no then dialog box is canceled.
+                                dialog.cancel();
+                            });
+
+                            // Create the Alert dialog
+                            AlertDialog alertDialog = builder.create();
+                            // Show the Alert Dialog box
+                            alertDialog.show();
+
                         }
 
-                    }
+                    } else {
+                        boolean isAdded = db.addToCart(strMedName, Integer.parseInt(medQuantity.getText().toString()), Float.parseFloat(Integer.toString(intMedPrice)));
 
-                    else {
-                        boolean isAdded =  db.addToCart(strMedName,Integer.parseInt(medQuantity.getText().toString()),Float.parseFloat(Integer.toString(intMedPrice)));
-
-                        if(isAdded) {
+                        if (isAdded) {
                             Toast.makeText(getApplicationContext(), "Added Success", Toast.LENGTH_SHORT).show();
                             finish();
-                        }
-
-                        else {
+                        } else {
                             Toast.makeText(getApplicationContext(), "Error in Adding item", Toast.LENGTH_SHORT).show();
                         }
                     }
 
 
-
-
-
-                }
-
-                catch (Exception e) {
+                } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-
-
 
 
 //                if (db.checkCart(username, product) == 1) {
