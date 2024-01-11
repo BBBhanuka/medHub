@@ -23,6 +23,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -127,35 +128,16 @@ public class CartBuyMedicineActivity extends AppCompatActivity {
 
 
 
+
+
+
         lst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
-                i+= 1;
 
-                Cursor data = db.getDataforUpdate(String.valueOf(i));
-                String medName = null;
-                String medQuantity = null;
-                String medPrice = null;
+                String name = sa[i]["medName"];
 
 
-                if (data.moveToFirst()) {
-
-                     medName = data.getString(0);
-                     medQuantity = data.getString(1);
-                     medPrice = data.getString(2);
-
-                }
-
-                finish();
-                Intent it = new Intent(CartBuyMedicineActivity.this,UpdateMedCart.class);
-                it.putExtra("medName",medName);
-                it.putExtra("medQty",medQuantity);
-                it.putExtra("medPrice",medPrice);
-                startActivity(it);
-
-
-
-//                Toast.makeText(getApplicationContext(), String.valueOf(medPrice), Toast.LENGTH_SHORT).show();
 
 
             }

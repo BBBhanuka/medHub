@@ -94,7 +94,6 @@ public class Database extends SQLiteOpenHelper {
     }
 
 
-
     public boolean addToCart(String medName, int medQty, float medPrice) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -123,7 +122,7 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
-    public boolean updateAddedQTY(String medName, int medQTY){
+    public boolean updateAddedQTY(String medName, int medQTY) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("QTY", medQTY);
@@ -145,20 +144,19 @@ public class Database extends SQLiteOpenHelper {
 
     public Cursor getDataforUpdate(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor result = db.query("TEMP_ORDER", new String[]{"MEDNAME" , "QTY" , "PRICE"}, "ID = ?", new String[]{id}, null, null, null);
+        Cursor result = db.query("TEMP_ORDER", new String[]{"MEDNAME", "QTY", "PRICE"}, "ID = ?", new String[]{id}, null, null, null);
 
-        return  result;
+        return result;
     }
 
 
-
-    public boolean updateAddedQTYIndex(String id , int quantity){
+    public boolean updateAddedQTYIndex(String medName, int quantity) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("QTY", quantity);
 
-        String selection = "ID = ?";
-        String[] selectionArgs = {id};
+        String selection = "MEDNAME = ?";
+        String[] selectionArgs = {medName};
 
 // Perform the update query
         int rowsUpdated = db.update("TEMP_ORDER", contentValues, selection, selectionArgs);
@@ -180,7 +178,7 @@ public class Database extends SQLiteOpenHelper {
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
-            return  false;
+            return false;
         } finally {
             db.close();
         }
@@ -190,9 +188,9 @@ public class Database extends SQLiteOpenHelper {
 
     public Cursor getAlreadyAddedCount(String medName) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor result = db.query("TEMP_ORDER", new String[]{"MEDNAME" , "QTY"}, "MEDNAME = ?", new String[]{medName}, null, null, null);
+        Cursor result = db.query("TEMP_ORDER", new String[]{"MEDNAME", "QTY"}, "MEDNAME = ?", new String[]{medName}, null, null, null);
 
-        return  result;
+        return result;
     }
 
     public Cursor getCurrentCart() {
@@ -202,8 +200,24 @@ public class Database extends SQLiteOpenHelper {
     }
 
 
+    public boolean deleteMedicine(String medName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String selection = "MEDNAME = ?";
+        String[] selectionArgs = {medName};
+
+// Perform the delete query
+        int rowDeleted = db.delete("TEMP_ORDER", selection, selectionArgs);
 
 
+// Check the result
+        if (rowDeleted == 1) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 
 
 //    private String getUsername() {
@@ -213,7 +227,7 @@ public class Database extends SQLiteOpenHelper {
 //    }
 
 
-   // CREATE TABLE APPOINTMENT(APPID INTEGER PRIMARY KEY AUTOINCREMENT,FULLNAME TEXT,ADDRESS TEXT,CONTACTNUMBER TEXT,REPORTS TEXT,USERNAME TEXT, DATE TEXT, TIME TEXT)
+    // CREATE TABLE APPOINTMENT(APPID INTEGER PRIMARY KEY AUTOINCREMENT,FULLNAME TEXT,ADDRESS TEXT,CONTACTNUMBER TEXT,REPORTS TEXT,USERNAME TEXT, DATE TEXT, TIME TEXT)
     public void bookAppointment(String fullName, String address, String contactNo, String reports, String date, String time) {
         ContentValues cv = new ContentValues();
         cv.put("USERNAME", AppGlobal.userName);
