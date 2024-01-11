@@ -29,8 +29,13 @@ public class Database extends SQLiteOpenHelper {
         String appointmentTableQry = "CREATE TABLE APPOINTMENT(APPID INTEGER PRIMARY KEY AUTOINCREMENT,FULLNAME TEXT,ADDRESS TEXT,CONTACTNUMBER TEXT,REPORTS TEXT,USERNAME TEXT, DATE TEXT, TIME TEXT)";
         sqLiteDatabase.execSQL(appointmentTableQry);
 
-        String orderTableQry = "create table orders(FULLNAME text,ADDRESS text,CONTACTNO text,USERNAME text)";
+        String orderTableQry = "CREATE TABLE ORDERS(FULLNAME TEXT,ADDRESS TEXT,CONTACTNO TEXT,USERNAME TEXT)";
         sqLiteDatabase.execSQL(orderTableQry);
+
+        String tempOrderTableQry = "CREATE TABLE TEMP_ORDER(ID INTEGER PRIMARY KEY AUTOINCREMENT,MEDNAME TEXT,QTY INTEGER, PRICE TEXT)";
+        sqLiteDatabase.execSQL(tempOrderTableQry);
+
+
     }
 
     @Override
@@ -88,6 +93,144 @@ public class Database extends SQLiteOpenHelper {
             return true;
     }
 
+    public int getItemCountCart() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor result = db.rawQuery("SELECT * FROM " + "TEMP_ORDER", null);
+        int itemCount = 0;
+
+        while(result.moveToNext()){
+            itemCount++;
+        }
+
+        return itemCount;
+    }
+
+
+    public boolean addToCart(String medName, int medQty, float medPrice) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("MEDNAME", medName);
+        contentValues.put("QTY", medQty);
+        contentValues.put("PRICE", medPrice);
+
+        long result = db.insert("TEMP_ORDER", null, contentValues);
+
+        if (result == -1)
+            return false;
+        else
+            return true;
+    }
+
+
+    public boolean checkCartforItem(String medName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor result = db.query("TEMP_ORDER", new String[]{"MEDNAME"}, "MEDNAME = ?", new String[]{medName}, null, null, null);
+
+        if (result.getCount() != 0) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public boolean updateAddedQTY(String medName, int medQTY) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("QTY", medQTY);
+
+        String selection = "MEDNAME = ?";
+        String[] selectionArgs = {medName};
+
+// Perform the update query
+        int rowsUpdated = db.update("TEMP_ORDER", contentValues, selection, selectionArgs);
+
+// Check the result
+        if (rowsUpdated == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    public Cursor getDataforUpdate(String medName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor result = db.query("TEMP_ORDER", new String[]{"MEDNAME", "QTY", "PRICE"}, "MEDNAME = ?", new String[]{medName}, null, null, null);
+
+        return result;
+    }
+
+
+    public boolean updateAddedQTYIndex(String medName, int quantity) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("QTY", quantity);
+
+        String selection = "MEDNAME = ?";
+        String[] selectionArgs = {medName};
+
+// Perform the update query
+        int rowsUpdated = db.update("TEMP_ORDER", contentValues, selection, selectionArgs);
+
+// Check the result
+        if (rowsUpdated == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean clearTempDB() {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        try {
+            db.execSQL("DELETE FROM TEMP_ORDER");
+            db.execSQL("DELETE FROM SQLITE_SEQUENCE WHERE name='TEMP_ORDER'");
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            db.close();
+        }
+
+    }
+
+
+    public Cursor getAlreadyAddedCount(String medName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor result = db.query("TEMP_ORDER", new String[]{"MEDNAME", "QTY"}, "MEDNAME = ?", new String[]{medName}, null, null, null);
+
+        return result;
+    }
+
+    public Cursor getCurrentCart() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor result = db.rawQuery("SELECT * FROM " + "TEMP_ORDER", null);
+        return result;
+    }
+
+
+    public boolean deleteMedicine(String medName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String selection = "MEDNAME = ?";
+        String[] selectionArgs = {medName};
+
+// Perform the delete query
+        int rowDeleted = db.delete("TEMP_ORDER", selection, selectionArgs);
+
+
+// Check the result
+        if (rowDeleted == 1) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
 
 //    private String getUsername() {
 //        SharedPreferences sharedPreferences = context.getSharedPreferences("userData", Context.MODE_PRIVATE);
@@ -96,7 +239,7 @@ public class Database extends SQLiteOpenHelper {
 //    }
 
 
-   // CREATE TABLE APPOINTMENT(APPID INTEGER PRIMARY KEY AUTOINCREMENT,FULLNAME TEXT,ADDRESS TEXT,CONTACTNUMBER TEXT,REPORTS TEXT,USERNAME TEXT, DATE TEXT, TIME TEXT)
+    // CREATE TABLE APPOINTMENT(APPID INTEGER PRIMARY KEY AUTOINCREMENT,FULLNAME TEXT,ADDRESS TEXT,CONTACTNUMBER TEXT,REPORTS TEXT,USERNAME TEXT, DATE TEXT, TIME TEXT)
     public void bookAppointment(String fullName, String address, String contactNo, String reports, String date, String time) {
         ContentValues cv = new ContentValues();
         cv.put("USERNAME", AppGlobal.userName);
@@ -128,43 +271,43 @@ public class Database extends SQLiteOpenHelper {
 //            return true;
 //    }
 
-
-    public void addCart(String username, String product, float price, String otype) {
-        ContentValues cv = new ContentValues();
-        cv.put("username", username);
-        cv.put("product", product);
-        cv.put("price", price);
-        cv.put("otype", otype);
-        SQLiteDatabase db = getWritableDatabase();
-        db.insert("cart", null, cv);
-        db.close();
-    }
-
-    public void removeCart(String username, String otype) {
-        String str[] = new String[2];
-        str[0] = username;
-        str[1] = otype;
-        SQLiteDatabase db = getWritableDatabase();
-        db.delete("cart", "username=? and otype=?", str);
-        db.close();
-    }
-
-    public ArrayList getCartData(String username, String otype) {
-        ArrayList<String> arr = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
-        String str[] = new String[2];
-        str[0] = username;
-        str[1] = otype;
-        Cursor c = db.rawQuery("select * from cart where username = ? and otype = ?", str);
-        if (c.moveToFirst()) {
-            do {
-                String product = c.getString(1);
-                String price = c.getString(2);
-                arr.add(product + "$" + price);
-            } while (c.moveToNext());
-        }
-        db.close();
-        return arr;
-    }
+//
+//    public void addCart(String username, String product, float price, String otype) {
+//        ContentValues cv = new ContentValues();
+//        cv.put("username", username);
+//        cv.put("product", product);
+//        cv.put("price", price);
+//        cv.put("otype", otype);
+//        SQLiteDatabase db = getWritableDatabase();
+//        db.insert("cart", null, cv);
+//        db.close();
+//    }
+//
+//    public void removeCart(String username, String otype) {
+//        String str[] = new String[2];
+//        str[0] = username;
+//        str[1] = otype;
+//        SQLiteDatabase db = getWritableDatabase();
+//        db.delete("cart", "username=? and otype=?", str);
+//        db.close();
+//    }
+//
+//    public ArrayList getCartData(String username, String otype) {
+//        ArrayList<String> arr = new ArrayList<>();
+//        SQLiteDatabase db = getReadableDatabase();
+//        String str[] = new String[2];
+//        str[0] = username;
+//        str[1] = otype;
+//        Cursor c = db.rawQuery("select * from cart where username = ? and otype = ?", str);
+//        if (c.moveToFirst()) {
+//            do {
+//                String product = c.getString(1);
+//                String price = c.getString(2);
+//                arr.add(product + "$" + price);
+//            } while (c.moveToNext());
+//        }
+//        db.close();
+//        return arr;
+//    }
 
 }

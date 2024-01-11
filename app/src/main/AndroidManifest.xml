@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Healthcare"
         tools:targetApi="31">
         <activity
+            android:name=".UpdateMedCart"
+            android:exported="false" />
+        <activity
             android:name=".BookOrderActivity"
             android:exported="false">
             <meta-data
@@ -159,20 +162,10 @@
         <activity
             android:name=".BuyMedicineDetailsActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
-
-
-
     </application>
 
 </manifest>
