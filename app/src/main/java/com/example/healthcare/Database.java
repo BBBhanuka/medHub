@@ -93,6 +93,18 @@ public class Database extends SQLiteOpenHelper {
             return true;
     }
 
+    public int getItemCountCart() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor result = db.rawQuery("SELECT * FROM " + "TEMP_ORDER", null);
+        int itemCount = 0;
+
+        while(result.moveToNext()){
+            itemCount++;
+        }
+
+        return itemCount;
+    }
+
 
     public boolean addToCart(String medName, int medQty, float medPrice) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -142,9 +154,9 @@ public class Database extends SQLiteOpenHelper {
     }
 
 
-    public Cursor getDataforUpdate(String id) {
+    public Cursor getDataforUpdate(String medName) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor result = db.query("TEMP_ORDER", new String[]{"MEDNAME", "QTY", "PRICE"}, "ID = ?", new String[]{id}, null, null, null);
+        Cursor result = db.query("TEMP_ORDER", new String[]{"MEDNAME", "QTY", "PRICE"}, "MEDNAME = ?", new String[]{medName}, null, null, null);
 
         return result;
     }

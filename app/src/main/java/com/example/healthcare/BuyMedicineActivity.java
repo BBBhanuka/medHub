@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,15 +18,15 @@ import java.util.HashMap;
 public class BuyMedicineActivity extends AppCompatActivity {
     private String[][] packages =
             {
-                    {"Uprise-D3 1000IU","","","","50"},
-                    {"HealthVit Chromium Picolinate 200mcg Capsule","","","","305"},
-                    {"Vitamin B Complex Capsules","","","","448"},
-                    {"Inlife Vitamin E Wheat Germ Oil Capsule","","","","539"},
-                    {"Dolo 650 Tablet","","","","30"},
-                    {"Crocin 650 Advance Tablet","","","","50"},
-                    {"Strepsils Medicated Lozenges for Sore Throat","","","","40"},
-                    {"Tata 1mg Calcium + Vitamin D3","","","","30"},
-                    {"Feronia -XT Tablet","","","","130"},
+                    {"Uprise-D3 1000IU", "", "", "", "50"},
+                    {"HealthVit Chromium Picolinate 200mcg Capsule", "", "", "", "305"},
+                    {"Vitamin B Complex Capsules", "", "", "", "448"},
+                    {"Inlife Vitamin E Wheat Germ Oil Capsule", "", "", "", "539"},
+                    {"Dolo 650 Tablet", "", "", "", "30"},
+                    {"Crocin 650 Advance Tablet", "", "", "", "50"},
+                    {"Strepsils Medicated Lozenges for Sore Throat", "", "", "", "40"},
+                    {"Tata 1mg Calcium + Vitamin D3", "", "", "", "30"},
+                    {"Feronia -XT Tablet", "", "", "", "130"},
 
             };
     private String[] package_details = {
@@ -49,11 +50,11 @@ public class BuyMedicineActivity extends AppCompatActivity {
             "Helps to reduce the iron deficiency due to chronic blood loss or low intake of iron"
     };
 
-    HashMap<String,String> item;
+    HashMap<String, String> item;
     ArrayList list;
     SimpleAdapter sa;
     ListView lst;
-    Button btnBack,btnGoToCart;
+    Button btnBack, btnGoToCart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +68,17 @@ public class BuyMedicineActivity extends AppCompatActivity {
         btnGoToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(BuyMedicineActivity.this,CartBuyMedicineActivity.class));
+
+                Database db = new Database(BuyMedicineActivity.this);
+
+                int itemCount = db.getItemCountCart();
+
+                if (itemCount == 0) {
+                    Toast.makeText(getApplicationContext(), "No Item in Cart", Toast.LENGTH_SHORT).show();
+                } else {
+                    startActivity(new Intent(BuyMedicineActivity.this, CartBuyMedicineActivity.class));
+                }
+
             }
         });
 
@@ -80,26 +91,26 @@ public class BuyMedicineActivity extends AppCompatActivity {
         });
 
         list = new ArrayList();
-        for (int i=0;i<packages.length;i++){
-            item = new HashMap<String,String>();
-            item.put("medName",packages[i][0]);
-            item.put("medPrice","Total Cost:"+packages[i][4]+"/-");
+        for (int i = 0; i < packages.length; i++) {
+            item = new HashMap<String, String>();
+            item.put("medName", packages[i][0]);
+            item.put("medPrice", "Total Cost:" + packages[i][4] + "/-");
             list.add(item);
         }
 
-        sa = new SimpleAdapter(this,list,
+        sa = new SimpleAdapter(this, list,
                 R.layout.multi_lines,
-                new String[]{"medName","medPrice"},
-                new int[]{R.id.line_a,R.id.line_e});
+                new String[]{"medName", "medPrice"},
+                new int[]{R.id.line_a, R.id.line_e});
         lst.setAdapter(sa);
 
         lst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
-                Intent it = new Intent(BuyMedicineActivity.this,BuyMedicineDetailsActivity.class);
-                it.putExtra("medName",packages[i][0]);
-                it.putExtra("medDescription",package_details[i]);
-                it.putExtra("medPrice",packages[i][4]);
+                Intent it = new Intent(BuyMedicineActivity.this, BuyMedicineDetailsActivity.class);
+                it.putExtra("medName", packages[i][0]);
+                it.putExtra("medDescription", package_details[i]);
+                it.putExtra("medPrice", packages[i][4]);
                 startActivity(it);
             }
         });

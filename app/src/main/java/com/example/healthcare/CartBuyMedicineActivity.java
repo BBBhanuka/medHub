@@ -10,6 +10,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -27,6 +28,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Map;
 
 public class CartBuyMedicineActivity extends AppCompatActivity {
     HashMap<String, String> item;
@@ -37,7 +39,7 @@ public class CartBuyMedicineActivity extends AppCompatActivity {
 
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
-    private Button dateButton, btnCheckout, btnBack;
+    private Button dateButton, btnCheckout, btnBack, btnClear;
     private String[][] packages = {};
 
     @SuppressLint("MissingInflatedId")
@@ -49,20 +51,15 @@ public class CartBuyMedicineActivity extends AppCompatActivity {
         dateButton = findViewById(R.id.buttonBMCartDate);
         btnCheckout = findViewById(R.id.buttonMOCartCheckout);
         btnBack = findViewById(R.id.buttonMODBack);
+        btnClear = findViewById(R.id.buttonClearCart);
         tvTotal = findViewById(R.id.textViewMOCartTotalCost);
         lst = findViewById(R.id.listViewMO);
-//
-//        SharedPreferences sharedPreferences = getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
-//        String username = sharedPreferences.getString("username","").toString();
+
 
         Database db = new Database(getApplicationContext());
 
-        float totalAmount = 0;
-//        ArrayList dbData = db.getCartData(username,"medicine");
-//        //Toast.makeText(getApplicationContext(),""+dbData,Toast.LENGTH_LONG).show();
 
         Cursor results = db.getCurrentCart();
-
 
         list = new ArrayList();
         double finalTotal = 0;
@@ -77,9 +74,9 @@ public class CartBuyMedicineActivity extends AppCompatActivity {
             item = new HashMap<String, String>();
             item.put("medName", medName);
             item.put("medQTY", medQuantity + " nos");
-            item.put("medPrice",medPrice + "/=");
+            item.put("medPrice", medPrice + "/=");
             item.put("other1", "");
-            item.put("totalCost",totalCost +"/=");
+            item.put("totalCost", totalCost + "/=");
             list.add(item);
 
             finalTotal += totalCost;
@@ -96,14 +93,59 @@ public class CartBuyMedicineActivity extends AppCompatActivity {
         tvTotal.setText("Total Amount : " + finalTotal);
 
 
+        btnClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int recordCount = db.getItemCountCart();
 
+                if(recordCount > 0) {
 
+                    androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(CartBuyMedicineActivity.this);
 
+                    // Set the message show for the Alert time
+                    builder.setMessage(recordCount + " Item/s in Cart.\nAre you sure to clear shopping Cart? ");
+
+                    // Set Alert Title
+                    builder.setTitle("Warning !");
+
+                    // Set Cancelable false for when the user clicks on the outside the Dialog Box then it will remain show
+                    builder.setCancelable(false);
+
+                    // Set the positive button with yes name Lambda OnClickListener method is use of DialogInterface interface.
+                    builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
+
+                        // When the user click yes button then table will clear
+
+                        boolean isCleared = db.clearTempDB();
+
+                        if (isCleared) {
+                            Toast.makeText(getApplicationContext(), recordCount + " number of records cleared !", Toast.LENGTH_SHORT).show();
+                            finish();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Error in Operation", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    // Set the Negative button with No name Lambda OnClickListener method is use of DialogInterface interface.
+                    builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
+                        // If user click no then dialog box is canceled.
+                        dialog.cancel();
+                    });
+
+                    // Create the Alert dialog
+                    androidx.appcompat.app.AlertDialog alertDialog = builder.create();
+                    // Show the Alert Dialog box
+                    alertDialog.show();
+
+                }
+            }
+        });
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(CartBuyMedicineActivity.this, BuyMedicineActivity.class));
+                finish();
+              //  startActivity(new Intent(CartBuyMedicineActivity.this, BuyMedicineActivity.class));
             }
         });
 
@@ -127,25 +169,42 @@ public class CartBuyMedicineActivity extends AppCompatActivity {
         });
 
 
-
-
-
-
         lst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Get the data associated with the touched item
+                Map<String, Object> itemData = (Map<String, Object>) parent.getItemAtPosition(position);
 
-                String name = sa[i]["medName"];
+                // Get the "medName" value
+                String medName = (String) itemData.get("medName");
+
+                Cursor data = db.getDataforUpdate(medName);
+
+                String medQuantity = null;
+                String medPrice = null;
 
 
+                if (data.moveToFirst()) {
 
+                    if (medName.equals(data.getString(0))) {
+                        medQuantity = data.getString(1);
+                        medPrice = data.getString(2);
+
+                    }
+
+                }
+
+                finish();
+                Intent it = new Intent(CartBuyMedicineActivity.this, UpdateMedCart.class);
+                it.putExtra("medName", medName);
+                it.putExtra("medQty", medQuantity);
+                it.putExtra("medPrice", medPrice);
+                startActivity(it);
 
             }
         });
+
     }
-
-
-
 
     private void initDatePicker() {
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
@@ -164,10 +223,6 @@ public class CartBuyMedicineActivity extends AppCompatActivity {
         datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
         datePickerDialog.getDatePicker().setMinDate(cal.getTimeInMillis() + 86400000);
     }
-
-
-
-
 
 
 }

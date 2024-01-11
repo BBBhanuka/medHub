@@ -41,19 +41,7 @@ public class BuyMedicineDetailsActivity extends AppCompatActivity {
         btnAddToCart = findViewById(R.id.buttonBMCartCheckout);
         totalCost = findViewById(R.id.textViewMedTotalCost);
         medQuantity = findViewById(R.id.editTextQuantity);
-        Button truncate = findViewById(R.id.buttonClear);
 
-
-        truncate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Database db = new Database(getApplicationContext());
-                boolean actionOK = db.clearTempDB();
-                if (actionOK) {
-                    Toast.makeText(getApplicationContext(), "Successfully Cleared db", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
 
         Intent intent = getIntent();
         int intMedPrice = Integer.parseInt(intent.getStringExtra("medPrice"));
@@ -185,15 +173,6 @@ public class BuyMedicineDetailsActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
-
-//                if (db.checkCart(username, product) == 1) {
-//                    Toast.makeText(getApplicationContext(), "Product Already Added", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    db = new Database(getApplicationContext());
-//                    db.addCart(username, product, price, "medicine");
-//                    Toast.makeText(getApplicationContext(), "Record Inserted to Cart", Toast.LENGTH_SHORT).show();
-//                    startActivity(new Intent(BuyMedicineDetailsActivity.this, BuyMedicineActivity.class));
-//                }
             }
         });
     }

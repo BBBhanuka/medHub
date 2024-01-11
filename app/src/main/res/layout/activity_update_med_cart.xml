@@ -17,14 +17,14 @@
         android:text="Medname"
         android:textAlignment="center"
         android:textColor="@color/yellowLight"
-        android:textSize="20sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewHAName"
-        app:layout_constraintVertical_bias="0.102" />
+        app:layout_constraintVertical_bias="0.037" />
 
     <TextView
         android:id="@+id/textViewHAName"
@@ -56,21 +56,6 @@
         tools:ignore="UnknownIdInLayout" />
 
     <Button
-        android:id="@+id/buttonClear"
-        android:layout_width="101dp"
-        android:layout_height="37dp"
-        android:background="#FF0404"
-        android:backgroundTintMode="add"
-        android:text="Clear Cart"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.042"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.912"
-        tools:ignore="UnknownIdInLayout" />
-
-    <Button
         android:id="@+id/buttonUpdateQTY"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -99,31 +84,39 @@
         tools:ignore="UnknownIdInLayout" />
 
     <TextView
-        android:id="@+id/textViewMedPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Medcine Price"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.379"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
         android:id="@+id/textViewMedCurQty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Med Cur QTY"
-        android:textColor="@color/black"
+        android:textColor="@color/colorWhite"
+        android:textColorHint="#000000"
+        android:textColorLink="#070000"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.443"
+        app:layout_constraintVertical_bias="0.398"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textViewMedPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Medcine Price"
+        android:textColor="@color/colorWhite"
+        android:textColorHint="#000000"
+        android:textColorLink="#070000"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.335"
         tools:ignore="MissingConstraints" />
 
     <EditText
@@ -135,8 +128,10 @@
         android:inputType="number"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        android:textColorLink="@color/black"
+        android:textColorHint="#000000"
+        android:textColorLink="#070000"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
