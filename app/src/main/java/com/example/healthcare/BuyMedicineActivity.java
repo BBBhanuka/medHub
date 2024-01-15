@@ -54,7 +54,7 @@ public class BuyMedicineActivity extends AppCompatActivity {
     ArrayList list;
     SimpleAdapter sa;
     ListView lst;
-    Button btnBack, btnGoToCart;
+    Button btnBack, btnGoToCart, test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +64,15 @@ public class BuyMedicineActivity extends AppCompatActivity {
         lst = findViewById(R.id.listViewMO);
         btnBack = findViewById(R.id.buttonMODBack);
         btnGoToCart = findViewById(R.id.buttonMOCartCheckout);
+        test = findViewById(R.id.Test);
+
+
+        test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(BuyMedicineActivity.this,DoctorLocationDetailsActivity.class));
+            }
+        });
 
         btnGoToCart.setOnClickListener(new View.OnClickListener() {
             @Override

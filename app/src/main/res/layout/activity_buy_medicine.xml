@@ -68,6 +68,20 @@
         tools:ignore="UnknownIdInLayout" />
 
     <Button
+        android:id="@+id/Test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/btn_bg"
+        android:text="Locatoin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.566"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextLoginUsername"
+        tools:ignore="UnknownIdInLayout" />
+
+    <Button
         android:id="@+id/buttonMOCartCheckout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

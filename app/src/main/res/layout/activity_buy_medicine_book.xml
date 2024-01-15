@@ -22,8 +22,8 @@
     <EditText
         android:id="@+id/editTextBMBAddress"
         android:layout_width="322dp"
-        android:layout_height="37dp"
-        android:layout_marginBottom="172dp"
+        android:layout_height="43dp"
+        android:layout_marginBottom="176dp"
         android:background="@drawable/input_bg"
         android:drawableLeft="@drawable/ic_baseline_security_24"
         android:drawablePadding="10dp"
@@ -43,7 +43,7 @@
 
     <EditText
         android:id="@+id/editTextBMBFullName"
-        android:layout_width="319dp"
+        android:layout_width="322dp"
         android:layout_height="43dp"
         android:layout_marginBottom="76dp"
         android:background="@drawable/input_bg"
@@ -80,8 +80,8 @@
 
     <EditText
         android:id="@+id/editTextBMBPincode"
-        android:layout_width="323dp"
-        android:layout_height="36dp"
+        android:layout_width="322dp"
+        android:layout_height="43dp"
         android:background="@drawable/input_bg"
         android:drawableLeft="@drawable/ic_baseline_person_24"
         android:drawablePadding="10dp"
@@ -97,14 +97,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.659"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="357dp"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="357dp" />
 
     <EditText
         android:id="@+id/editTextBMBContact"
         android:layout_width="322dp"
-        android:layout_height="37dp"
-        android:layout_marginBottom="64dp"
+        android:layout_height="43dp"
+        android:layout_marginBottom="60dp"
         android:background="@drawable/input_bg"
         android:drawableLeft="@drawable/ic_baseline_email_24"
         android:drawablePadding="10dp"

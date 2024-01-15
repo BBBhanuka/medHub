@@ -22,7 +22,7 @@
     <EditText
         android:id="@+id/contactNoTxt"
         android:layout_width="322dp"
-        android:layout_height="37dp"
+        android:layout_height="43dp"
         android:layout_marginBottom="184dp"
         android:background="@drawable/input_bg"
         android:drawableLeft="@drawable/ic_baseline_email_24"
@@ -43,8 +43,8 @@
 
     <EditText
         android:id="@+id/fullnameTxt"
-        android:layout_width="323dp"
-        android:layout_height="36dp"
+        android:layout_width="322dp"
+        android:layout_height="43dp"
         android:background="@drawable/input_bg"
         android:drawableLeft="@drawable/ic_baseline_person_24"
         android:drawablePadding="10dp"
@@ -96,8 +96,8 @@
 
     <EditText
         android:id="@+id/addressTxt"
-        android:layout_width="323dp"
-        android:layout_height="36dp"
+        android:layout_width="322dp"
+        android:layout_height="43dp"
         android:layout_marginTop="112dp"
         android:background="@drawable/input_bg"
         android:drawableLeft="@drawable/ic_baseline_security_24"
@@ -119,9 +119,8 @@
     <EditText
         android:id="@+id/reportsTxt"
         android:layout_width="322dp"
-        android:layout_height="wrap_content"
+        android:layout_height="43dp"
         android:layout_marginTop="16dp"
-        android:minLines="4"
         android:layout_marginBottom="132dp"
         android:background="@drawable/input_bg"
         android:drawableLeft="@drawable/ic_baseline_person_24"
@@ -129,6 +128,7 @@
         android:ems="10"
         android:hint="Reports"
         android:inputType="textPersonName"
+        android:minLines="4"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
         android:paddingRight="10dp"

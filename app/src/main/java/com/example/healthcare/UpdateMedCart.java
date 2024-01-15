@@ -2,6 +2,7 @@ package com.example.healthcare;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -10,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.app.AlertDialog;
+
 
 import java.util.concurrent.ExecutionException;
 
@@ -57,25 +60,60 @@ public class UpdateMedCart extends AppCompatActivity {
             }
         });
 
-
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    boolean isDeleted = db.deleteMedicine(strMedName);
 
-                    if(isDeleted) {
-                        Toast.makeText(getApplicationContext(), "Medicine Deleted Successfully", Toast.LENGTH_SHORT).show();
-                        finish();
-                        startActivity(new Intent(UpdateMedCart.this, CartBuyMedicineActivity.class));
-                    }
-                    else{
-                        Toast.makeText(getApplicationContext(), "Operation Unsuccessful", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
+                    androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(UpdateMedCart.this);
+
+                    // Set the message show for the Alert time
+                    builder.setMessage("Medicine Name : " + strMedName + "\nAre you sure to remove above medicine from your cart?  ");
+
+                    // Set Alert Title
+                    builder.setTitle("Warning !");
+
+                    // Set Cancelable false for when the user clicks on the outside the Dialog Box then it will remain show
+                    builder.setCancelable(false);
+
+                    // Set the positive button with yes name Lambda OnClickListener method is use of DialogInterface interface.
+                    builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
+
+                        // When the user click yes button then table will clear
+
+                        try {
+                            boolean isDeleted = db.deleteMedicine(strMedName);
+
+                            if (isDeleted) {
+                                Toast.makeText(getApplicationContext(), "Medicine Deleted Successfully", Toast.LENGTH_SHORT).show();
+
+                                int recordCount = db.getItemCountCart();
+                                finish();
+
+                                if (recordCount == 0) {
+                                    Toast.makeText(getApplicationContext(), "Shopping cart is empty.", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(UpdateMedCart.this, BuyMedicineActivity.class));
+                                } else {
+                                    startActivity(new Intent(UpdateMedCart.this, CartBuyMedicineActivity.class));
+                                }
+
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Operation Unsuccessful", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    // Set the Negative button with No name Lambda OnClickListener method is use of DialogInterface interface.
+                    builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
+                        // If user click no then dialog box is canceled.
+                        dialog.cancel();
+                    });
+
+                    // Create the Alert dialog
+                    androidx.appcompat.app.AlertDialog alertDialog = builder.create();
+                    // Show the Alert Dialog box
+                    alertDialog.show();
             }
         });
 
@@ -96,7 +134,6 @@ public class UpdateMedCart extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Quantity Update Success", Toast.LENGTH_SHORT).show();
                             finish();
                             startActivity(new Intent(UpdateMedCart.this, CartBuyMedicineActivity.class));
-
 
                         } else {
                             Toast.makeText(getApplicationContext(), "Operation Unsuccessful", Toast.LENGTH_SHORT).show();
