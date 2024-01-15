@@ -10,10 +10,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class BuyMedicineBookActivity extends AppCompatActivity {
-    EditText edname,edcontact,edpincode;
-    Button btnBooking, edaddress;
+    EditText edName, edContact, edAddress;
+    Button btnBooking, btnCurLocation;
+
+    TextView locLable;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -21,16 +25,43 @@ public class BuyMedicineBookActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy_medicine_book);
 
-        edname = findViewById(R.id.editTextBMBFullName);
-        edaddress = findViewById(R.id.editTextBMBLocation);
-        edcontact = findViewById(R.id.editTextBMBContact);
-        edpincode = findViewById(R.id.editTextBMBAddress);
+        edName = findViewById(R.id.editTextFullName);
+        edAddress = findViewById(R.id.editTextAddress);
+        edContact = findViewById(R.id.editTextContact);
         btnBooking = findViewById(R.id.buttonBMBBooking);
+        locLable = findViewById(R.id.textViewLocationLable);
+        btnCurLocation = findViewById(R.id.btnCurrentLocation);
 
-        Intent intent=getIntent();
-        String price = String.valueOf(intent.getStringExtra("price").toString().split(java.util.regex.Pattern.quote(":")));
-        String date = intent.getStringExtra("date");
-        //String time = intent.getStringExtra("time");
+
+        if (AppGlobal.userLatitude == 0 && AppGlobal.userLongitude == 0) {
+            locLable.setText("Location is not set");
+        } else {
+            locLable.setText("Location is set");
+
+        }
+
+        edName.setText(AppGlobal.fullName);
+        edContact.setText(AppGlobal.contactNumber);
+
+
+        btnCurLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                if (!edAddress.getText().toString().isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Address must be empty to select current location", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (!edName.getText().toString().isEmpty() && !edContact.getText().toString().isEmpty()) {
+                        AppGlobal.fullName = edName.getText().toString();
+                        AppGlobal.contactNumber = edContact.getText().toString();
+                    }
+
+                    finish();
+                    startActivity(new Intent(BuyMedicineBookActivity.this, MapsActivity.class));
+                }
+            }
+        });
 
         btnBooking.setOnClickListener(new View.OnClickListener() {
             public Boolean getText() {
@@ -41,13 +72,13 @@ public class BuyMedicineBookActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SharedPreferences sharedPreferences = getSharedPreferences("shared_prefs", Context.MODE_PRIVATE);
-                String username = sharedPreferences.getString("username","").toString();
+                String username = sharedPreferences.getString("username", "").toString();
 
 //                Database db = new Database(getApplicationContext());
 //                db.addOrder(username,edname,getText().toString(),edcontact.getText().toString(),Integer.parseInt(edpincode.getText().toString()),date.toString(), "",Float.parseFloat(price[1].toString()),"medicine");
 //                db.removeCart(username,"medicine");
 //                Toast.makeText(getApplicationContext(),"Your booking is done successfully",Toast.LENGTH_LONG).show();
-                startActivity(new Intent(BuyMedicineBookActivity.this,HomeActivity.class));
+                startActivity(new Intent(BuyMedicineBookActivity.this, HomeActivity.class));
             }
 
         });

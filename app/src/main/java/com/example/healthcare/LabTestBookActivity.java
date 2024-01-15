@@ -21,10 +21,10 @@ public class LabTestBookActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lab_test_book);
 
-        edname = findViewById(R.id.editTextBMBFullName);
-        edaddress = findViewById(R.id.editTextBMBLocation);
-        edcontact = findViewById(R.id.editTextBMBContact);
-        edpincode = findViewById(R.id.editTextBMBAddress);
+        edname = findViewById(R.id.editTextFullName);
+        edaddress = findViewById(R.id.btnCurrentLocation);
+        edcontact = findViewById(R.id.editTextContact);
+        edpincode = findViewById(R.id.editTextAddress);
         btnBooking = findViewById(R.id.buttonBMBBooking);
 
         Intent intent=getIntent();

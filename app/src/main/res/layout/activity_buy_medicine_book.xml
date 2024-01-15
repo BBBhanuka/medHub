@@ -24,23 +24,23 @@
         tools:ignore="MissingConstraints" />
 
     <Button
-        android:id="@+id/editTextBMBLocation"
+        android:id="@+id/btnCurrentLocation"
         android:layout_width="322dp"
         android:layout_height="43dp"
         android:layout_marginTop="35dp"
         android:background="@drawable/input_bg"
         android:drawableLeft="@drawable/ic_baseline_location_24"
         android:ems="10"
-        android:text="Choose Location"
+        android:text="Current Location"
         android:textAlignment="center"
         android:textColor="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextBMBAddress" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextAddress" />
 
     <EditText
-        android:id="@+id/editTextBMBFullName"
+        android:id="@+id/editTextFullName"
         android:layout_width="322dp"
         android:layout_height="43dp"
         android:background="@drawable/input_bg"
@@ -57,8 +57,10 @@
         android:textColorHint="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.434" />
 
     <TextView
         android:id="@+id/textView"
@@ -76,7 +78,7 @@
         app:layout_constraintVertical_bias="0.061" />
 
     <EditText
-        android:id="@+id/editTextBMBAddress"
+        android:id="@+id/editTextAddress"
         android:layout_width="322dp"
         android:layout_height="43dp"
         android:layout_marginTop="12dp"
@@ -94,20 +96,20 @@
         android:textColorHint="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextBMBFullName"
+        app:layout_constraintTop_toBottomOf="@+id/editTextFullName"
         tools:ignore="MissingConstraints" />
 
     <EditText
-        android:id="@+id/editTextBMBContact"
+        android:id="@+id/editTextContact"
         android:layout_width="322dp"
         android:layout_height="43dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="5dp"
         android:background="@drawable/input_bg"
-        android:drawableLeft="@drawable/ic_baseline_email_24"
+        android:drawableLeft="@drawable/ic_baseline_phone_24"
         android:drawablePadding="10dp"
         android:ems="10"
         android:hint="Contact Number"
-        android:inputType="textPassword"
+        android:inputType="number"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
         android:paddingRight="10dp"
@@ -116,19 +118,19 @@
         android:textColorHint="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextBMBLocation" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewLocationLable" />
 
     <Button
         android:id="@+id/buttonBMBBooking"
         android:layout_width="323dp"
         android:layout_height="41dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="60dp"
         android:background="@drawable/btn_bg"
         android:text="place order"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextBMBContact"
+        app:layout_constraintTop_toBottomOf="@+id/editTextContact"
         tools:ignore="MissingConstraints" />
 
     <Button
@@ -152,10 +154,21 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.634" />
+        app:layout_constraintVertical_bias="0.568" />
+
+    <TextView
+        android:id="@+id/textViewLocationLable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Location"
+        android:textColor="@color/yellowLight"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnCurrentLocation" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
