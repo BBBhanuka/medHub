@@ -20,7 +20,7 @@
         tools:ignore="MissingConstraints" />
 
     <EditText
-        android:id="@+id/editTextBMBAddress"
+        android:id="@+id/editTextBMBLocation"
         android:layout_width="322dp"
         android:layout_height="37dp"
         android:layout_marginBottom="172dp"
@@ -58,7 +58,7 @@
         android:paddingBottom="10dp"
         android:textColor="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
-        app:layout_constraintBottom_toTopOf="@+id/editTextBMBPincode"
+        app:layout_constraintBottom_toTopOf="@+id/editTextBMBAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.647"
         app:layout_constraintStart_toStartOf="parent" />
@@ -79,7 +79,7 @@
         app:layout_constraintVertical_bias="0.094" />
 
     <EditText
-        android:id="@+id/editTextBMBPincode"
+        android:id="@+id/editTextBMBAddress"
         android:layout_width="323dp"
         android:layout_height="36dp"
         android:background="@drawable/input_bg"

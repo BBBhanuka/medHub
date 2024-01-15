@@ -10,11 +10,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 public class BuyMedicineBookActivity extends AppCompatActivity {
-    EditText edname,edaddress,edcontact,edpincode;
-    Button btnBooking;
+    EditText edname,edcontact,edpincode;
+    Button btnBooking, edaddress;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -23,9 +22,9 @@ public class BuyMedicineBookActivity extends AppCompatActivity {
         setContentView(R.layout.activity_buy_medicine_book);
 
         edname = findViewById(R.id.editTextBMBFullName);
-        edaddress = findViewById(R.id.editTextBMBAddress);
+        edaddress = findViewById(R.id.editTextBMBLocation);
         edcontact = findViewById(R.id.editTextBMBContact);
-        edpincode = findViewById(R.id.editTextBMBPincode);
+        edpincode = findViewById(R.id.editTextBMBAddress);
         btnBooking = findViewById(R.id.buttonBMBBooking);
 
         Intent intent=getIntent();

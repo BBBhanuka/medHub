@@ -71,7 +71,6 @@ public class BuyMedicineDetailsActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-
                 try {
 
                     if (medQuantity.getText().toString().isEmpty()) {
@@ -84,7 +83,6 @@ public class BuyMedicineDetailsActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-
             }
 
             @Override

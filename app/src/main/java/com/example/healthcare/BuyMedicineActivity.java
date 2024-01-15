@@ -65,6 +65,7 @@ public class BuyMedicineActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.buttonMODBack);
         btnGoToCart = findViewById(R.id.buttonMOCartCheckout);
         test = findViewById(R.id.Test);
+        Database db = new Database(BuyMedicineActivity.this);
 
 
         test.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +79,7 @@ public class BuyMedicineActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Database db = new Database(BuyMedicineActivity.this);
+
 
                 int itemCount = db.getItemCountCart();
 
