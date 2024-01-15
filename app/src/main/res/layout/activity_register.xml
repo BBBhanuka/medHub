@@ -10,8 +10,8 @@
     <EditText
         android:id="@+id/AddressTxtBYO"
         android:layout_width="322dp"
-        android:layout_height="37dp"
-        android:layout_marginBottom="120dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/input_bg"
         android:drawableLeft="@drawable/ic_baseline_security_24"
         android:drawablePadding="10dp"
@@ -24,15 +24,15 @@
         android:paddingBottom="10dp"
         android:textColor="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
-        app:layout_constraintBottom_toTopOf="@+id/bookBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.662"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailTxt" />
 
     <EditText
         android:id="@+id/fullnameTxtBYO"
         android:layout_width="323dp"
-        android:layout_height="36dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/input_bg"
         android:drawableLeft="@drawable/ic_baseline_person_24"
         android:drawablePadding="10dp"
@@ -45,12 +45,9 @@
         android:paddingBottom="10dp"
         android:textColor="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
-        app:layout_constraintBottom_toTopOf="@+id/emailTxt"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.659"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewAppTitle"
-        app:layout_constraintVertical_bias="0.69" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewAppTitle" />
 
     <TextView
         android:id="@+id/textViewBYOTitle"
@@ -85,8 +82,8 @@
     <EditText
         android:id="@+id/emailTxt"
         android:layout_width="323dp"
-        android:layout_height="36dp"
-        android:layout_marginTop="112dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/input_bg"
         android:drawableLeft="@drawable/ic_baseline_email_24"
         android:drawablePadding="10dp"
@@ -100,15 +97,14 @@
         android:textColor="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.647"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewAppTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/fullnameTxtBYO" />
 
     <EditText
         android:id="@+id/contactnoTxtBYO"
         android:layout_width="322dp"
-        android:layout_height="37dp"
-        android:layout_marginBottom="64dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/input_bg"
         android:drawableLeft="@drawable/ic_baseline_security_24"
         android:drawablePadding="10dp"
@@ -121,33 +117,31 @@
         android:paddingBottom="10dp"
         android:textColor="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
-        app:layout_constraintBottom_toTopOf="@+id/bookBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.651"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AddressTxtBYO" />
 
     <Button
         android:id="@+id/bookBtn"
         android:layout_width="323dp"
-        android:layout_height="41dp"
-        android:layout_marginTop="236dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="70dp"
         android:background="@drawable/btn_bg"
         android:text="Register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fullnameTxtBYO"
+        app:layout_constraintTop_toBottomOf="@+id/contactnoTxtBYO"
         tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/backBtnTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="72dp"
         android:text="Already have an account?"
         android:textColor="@color/colorBlack"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bookBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -44,6 +44,18 @@ public class BuyMedicineBookActivity extends AppCompatActivity {
         edContact.setText(AppGlobal.contactNumber);
 
 
+        locLable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (AppGlobal.userLatitude != 0 && AppGlobal.userLongitude != 0) {
+                    Toast.makeText(getApplicationContext(), "User Latitude : " + AppGlobal.userLatitude +"\nUser Longitude : " + AppGlobal.userLongitude, Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "Location is not set", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         btnCurLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
