@@ -7,5 +7,7 @@ public class AppGlobal {
     protected static String fullName = null;
     protected static String contactNumber = null;
 
+    protected static double totalCartAmount;
+
 
 }
