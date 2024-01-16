@@ -38,30 +38,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
-
-
-
-
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
         currentLocation = findViewById(R.id.btnCurLoc);
-
-
-
         currentLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 AppGlobal.userLongitude = longitude;
                 AppGlobal.userLatitude = latitude;
                 finish();
                 startActivity(new Intent(MapsActivity.this,BuyMedicineBookActivity.class));
-
-
             }
         });
 
@@ -75,14 +62,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } else {
             requestLocationPermission();
         }
-
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-
 
         LocationListener locationListener = new LocationListener() {
             @Override
@@ -91,13 +75,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 // Update the marker on the map with the new location
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
-
-
-                // Add marker to map
-                mMap.clear(); // Clear existing markers
-
             }
-
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
             }
