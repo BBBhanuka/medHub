@@ -37,6 +37,8 @@ public class CartBuyMedicineActivity extends AppCompatActivity {
     TextView tvTotal;
     ListView lst;
 
+    double finalTotal;
+
     private DatePickerDialog datePickerDialog;
     private TimePickerDialog timePickerDialog;
     private Button dateButton, btnCheckout, btnBack, btnClear;
@@ -62,7 +64,7 @@ public class CartBuyMedicineActivity extends AppCompatActivity {
         Cursor results = db.getCurrentCart();
 
         list = new ArrayList();
-        double finalTotal = 0;
+        finalTotal = 0;
 
 
         while (results.moveToNext()) {
@@ -74,9 +76,9 @@ public class CartBuyMedicineActivity extends AppCompatActivity {
             item = new HashMap<String, String>();
             item.put("medName", medName);
             item.put("medQTY", medQuantity + " nos");
-            item.put("medPrice", medPrice + "/=");
+            item.put("medPrice", medPrice + "/-");
             item.put("other1", "");
-            item.put("totalCost", totalCost + "/=");
+            item.put("totalCost", totalCost + "/-");
             list.add(item);
 
             finalTotal += totalCost;
@@ -153,8 +155,7 @@ public class CartBuyMedicineActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(CartBuyMedicineActivity.this, BuyMedicineBookActivity.class);
-                it.putExtra("price", tvTotal.getText());
-                it.putExtra("date", dateButton.getText());
+                AppGlobal.totalCartAmount = finalTotal;
                 startActivity(it);
             }
         });
@@ -223,6 +224,4 @@ public class CartBuyMedicineActivity extends AppCompatActivity {
         datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
         datePickerDialog.getDatePicker().setMinDate(cal.getTimeInMillis() + 86400000);
     }
-
-
 }
