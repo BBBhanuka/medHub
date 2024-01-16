@@ -11,20 +11,15 @@
         android:id="@+id/textViewHADTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="57dp"
         android:text="Buy Medicine"
         android:textAlignment="center"
         android:textColor="@color/yellowLight"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewHAName"
-        app:layout_constraintVertical_bias="0.102" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewHAName" />
 
     <TextView
         android:id="@+id/textViewHAName"
@@ -41,36 +36,33 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.094" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/textViewBMCartLogo6"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="16dp"-->
-<!--        android:layout_marginTop="16dp"-->
-<!--        android:layout_marginEnd="16dp"-->
-<!--        android:text="Deliver Location : Kurunegala"-->
-<!--        android:textColor="@android:color/holo_purple"-->
-<!--        android:textSize="16sp"-->
-<!--        android:textStyle="bold"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/textViewHAName"-->
-<!--        app:layout_constraintVertical_bias="0.0199998" />-->
+    <!--    <TextView-->
+    <!--        android:id="@+id/textViewBMCartLogo6"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="16dp"-->
+    <!--        android:layout_marginTop="16dp"-->
+    <!--        android:layout_marginEnd="16dp"-->
+    <!--        android:text="Deliver Location : Kurunegala"-->
+    <!--        android:textColor="@android:color/holo_purple"-->
+    <!--        android:textSize="16sp"-->
+    <!--        android:textStyle="bold"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/textViewHAName"-->
+    <!--        app:layout_constraintVertical_bias="0.0199998" />-->
 
     <TextView
         android:id="@+id/listViewHA"
-        android:layout_width="295dp"
-        android:layout_height="182dp"
-        android:layout_margin="10dp"
-        android:layout_marginTop="124dp"
+        android:layout_width="346dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="10dp"
         android:textColor="#FFFFFF"
         android:textColorLink="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.398" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewHADTitle" />
 
     <Button
         android:id="@+id/buttonHADBack"
@@ -90,48 +82,48 @@
         android:id="@+id/buttonBMCartCheckout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
         android:layout_marginBottom="60dp"
         android:background="@drawable/btn_bg"
         android:text="Add to cart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextLoginUsername"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMedTotalCost"
         tools:ignore="UnknownIdInLayout" />
 
     <TextView
         android:id="@+id/textViewMedPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="TextView"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/editTextQuantity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/listViewHA"
-        app:layout_constraintVertical_bias="0.604"
         tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/textViewMedTotalCost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:text="TextView"
         android:textColor="@color/black"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/buttonBMCartCheckout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listViewHA"
-        app:layout_constraintVertical_bias="0.516"
+        app:layout_constraintTop_toBottomOf="@+id/editTextQuantity"
         tools:ignore="MissingConstraints" />
 
     <EditText
         android:id="@+id/editTextQuantity"
         android:layout_width="323dp"
         android:layout_height="45dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/input_bg"
         android:drawablePadding="10dp"
         android:ems="10"
@@ -144,11 +136,8 @@
         android:textAlignment="center"
         android:textColor="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
-        app:layout_constraintBottom_toTopOf="@+id/textViewMedTotalCost"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listViewHA"
-        app:layout_constraintVertical_bias="0.743" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewMedPrice" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -25,18 +25,38 @@
 
     <Button
         android:id="@+id/btnCurrentLocation"
-        android:layout_width="322dp"
+        android:layout_width="156dp"
         android:layout_height="43dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/input_bg"
         android:drawableLeft="@drawable/ic_baseline_location_24"
         android:ems="10"
         android:text="Current Location"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         android:textColor="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
+        android:textSize="8sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.183"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextAddress" />
+
+    <Button
+        android:id="@+id/btnClearLocation"
+        android:layout_width="156dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/input_bg"
+        android:drawableLeft="@drawable/ic_baseline_loc_clear_24"
+        android:ems="10"
+        android:text="Clear Location"
+        android:textAlignment="center"
+        android:textColor="@color/colorWhite"
+
+        android:textColorHint="@color/colorWhite"
+        android:textSize="8sp"
+        app:layout_constraintStart_toEndOf="@+id/btnCurrentLocation"
         app:layout_constraintTop_toBottomOf="@+id/editTextAddress" />
 
     <EditText
@@ -103,7 +123,7 @@
         android:id="@+id/editTextContact"
         android:layout_width="322dp"
         android:layout_height="43dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/input_bg"
         android:drawableLeft="@drawable/ic_baseline_phone_24"
         android:drawablePadding="10dp"
@@ -124,7 +144,7 @@
         android:id="@+id/buttonBMBBooking"
         android:layout_width="323dp"
         android:layout_height="41dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/btn_bg"
         android:text="place order"
         app:layout_constraintEnd_toEndOf="parent"
@@ -154,21 +174,58 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.517"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.568" />
+        app:layout_constraintVertical_bias="0.573" />
 
     <TextView
         android:id="@+id/textViewLocationLable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:text="Location"
         android:textColor="@color/yellowLight"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnCurrentLocation" />
+
+    <TextView
+        android:id="@+id/textViewMedCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="Med Count"
+        android:textColor="@color/yellowLight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewBMBPackageName" />
+
+    <TextView
+        android:id="@+id/textViewTotalAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Price"
+        android:textColor="@color/yellowLight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMedCount" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="47dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="371dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
