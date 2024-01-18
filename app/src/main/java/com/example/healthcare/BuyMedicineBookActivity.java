@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 public class BuyMedicineBookActivity extends AppCompatActivity {
     EditText edName, edContact, edAddress;
-    Button btnBooking, btnCurLocation, btnClearLocation;
+    Button btnBooking, btnCurLocation, btnClearLocation, btnBack;
 
     TextView locLable, lblMedCount, lblTotalPrice;
 
@@ -38,6 +38,7 @@ public class BuyMedicineBookActivity extends AppCompatActivity {
         btnClearLocation = findViewById(R.id.btnClearLocation);
         lblMedCount = findViewById(R.id.textViewMedCount);
         lblTotalPrice = findViewById(R.id.textViewTotalAmount);
+        btnBack = findViewById(R.id.buttonBackToCart);
 
 
         int itemCount = db.getItemCountCart();
@@ -101,13 +102,11 @@ public class BuyMedicineBookActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                    if (!edName.getText().toString().isEmpty() && !edContact.getText().toString().isEmpty()) {
-                        AppGlobal.fullName = edName.getText().toString();
-                        AppGlobal.contactNumber = edContact.getText().toString();
-                    }
+                AppGlobal.fullName = edName.getText().toString();
+                AppGlobal.contactNumber = edContact.getText().toString();
 
-                    finish();
-                    startActivity(new Intent(BuyMedicineBookActivity.this, MapsActivity.class));
+                finish();
+                startActivity(new Intent(BuyMedicineBookActivity.this, MapsActivity.class));
                 }
 
         });
@@ -140,6 +139,13 @@ public class BuyMedicineBookActivity extends AppCompatActivity {
                 startActivity(new Intent(BuyMedicineBookActivity.this, HomeActivity.class));
             }
 
+        });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
         });
     }
 }
