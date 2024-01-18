@@ -75,6 +75,7 @@
         android:paddingBottom="10dp"
         android:textColor="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.516"
@@ -114,6 +115,7 @@
         android:paddingBottom="10dp"
         android:textColor="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextFullName"
@@ -136,6 +138,7 @@
         android:paddingBottom="10dp"
         android:textColor="@color/colorWhite"
         android:textColorHint="@color/colorWhite"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewLocationLable" />
@@ -198,6 +201,7 @@
         android:layout_marginTop="25dp"
         android:text="Med Count"
         android:textColor="@color/yellowLight"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewBMBPackageName" />
@@ -209,6 +213,7 @@
         android:layout_marginTop="15dp"
         android:text="Price"
         android:textColor="@color/yellowLight"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewMedCount" />
