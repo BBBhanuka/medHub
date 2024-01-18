@@ -2,11 +2,13 @@ package com.example.healthcare;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -35,6 +37,11 @@ public class Database extends SQLiteOpenHelper {
         String tempOrderTableQry = "CREATE TABLE TEMP_ORDER(ID INTEGER PRIMARY KEY AUTOINCREMENT,MEDNAME TEXT,QTY INTEGER, PRICE TEXT)";
         sqLiteDatabase.execSQL(tempOrderTableQry);
 
+        String OrderTableQry = "CREATE TABLE ORDER_HEADER(ID INTEGER PRIMARY KEY AUTOINCREMENT,FULLNAME TEXT, ADDRESS TEXT, CONTACTNO TEXT, MEDCOUNT INTEGER, AMOUNT TEXT, GEOLOCATION TEXT, USERNAME TEXT)";
+        sqLiteDatabase.execSQL(OrderTableQry);
+
+        String OrderDetailsTableQry = "CREATE TABLE ORDER_DATA(ID INTEGER PRIMARY KEY AUTOINCREMENT, ORDERID INTEGER, MEDNAME TEXT, QTY INTEGER, PRICE TEXT)";
+        sqLiteDatabase.execSQL(OrderDetailsTableQry);
 
     }
 
@@ -98,7 +105,7 @@ public class Database extends SQLiteOpenHelper {
         Cursor result = db.rawQuery("SELECT * FROM " + "TEMP_ORDER", null);
         int itemCount = 0;
 
-        while(result.moveToNext()){
+        while (result.moveToNext()) {
             itemCount++;
         }
 
@@ -232,6 +239,76 @@ public class Database extends SQLiteOpenHelper {
     }
 
 
+    public boolean placeOrder(Cursor tempOrder, String fullName, String address, String contactNo, int medCount, double amount, String geoLocation, String userName) {
+
+        boolean isHeaderAdded = false;
+        boolean isDataAdded = false;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("FULLNAME", fullName);
+        contentValues.put("ADDRESS", address);
+        contentValues.put("CONTACTNO", contactNo);
+        contentValues.put("MEDCOUNT", medCount);
+        contentValues.put("AMOUNT", amount);
+        contentValues.put("GEOLOCATION", geoLocation);
+        contentValues.put("USERNAME", userName);
+
+
+        long resultHeaderAdded = db.insert("ORDER_HEADER", null, contentValues);
+
+        if (resultHeaderAdded == -1) {
+            isHeaderAdded = false;
+        } else {
+            isHeaderAdded = true;
+            isDataAdded = true;
+            int recordCount = 0;
+            SQLiteDatabase db1 = this.getWritableDatabase();
+            ContentValues contentValues1 = new ContentValues();
+
+            Cursor lastOrder = db1.rawQuery("SELECT MAX(ID) FROM ORDER_HEADER", null);
+            int newOrderID = 0;
+
+            if (lastOrder.moveToFirst()) {
+                newOrderID = lastOrder.getInt(0);
+            }
+
+            lastOrder.close(); // Make sure to close the cursor when you're done with it
+
+
+
+            while (tempOrder.moveToNext()) {
+
+                contentValues1.put("ORDERID", String.valueOf(newOrderID));
+                contentValues1.put("MEDNAME", tempOrder.getString(1));
+                contentValues1.put("QTY", tempOrder.getString(2));
+                contentValues1.put("PRICE", tempOrder.getString(3));
+                recordCount += 1;
+                long resultDataAdded = db1.insert("ORDER_DATA", null, contentValues1);
+
+                if (resultDataAdded == -1) {
+                    isDataAdded = false;
+
+                } else {
+                    isDataAdded = true;
+                }
+            }
+
+
+        }
+
+
+        if (isHeaderAdded && isDataAdded) {
+            return true;
+
+        } else {
+            return false;
+        }
+
+
+    }
+
+
 //    private String getUsername() {
 //        SharedPreferences sharedPreferences = context.getSharedPreferences("userData", Context.MODE_PRIVATE);
 //        String username = sharedPreferences.getString("username", "").toString();
@@ -240,7 +317,8 @@ public class Database extends SQLiteOpenHelper {
 
 
     // CREATE TABLE APPOINTMENT(APPID INTEGER PRIMARY KEY AUTOINCREMENT,FULLNAME TEXT,ADDRESS TEXT,CONTACTNUMBER TEXT,REPORTS TEXT,USERNAME TEXT, DATE TEXT, TIME TEXT)
-    public void bookAppointment(String fullName, String address, String contactNo, String reports, String date, String time) {
+    public void bookAppointment(String fullName, String address, String contactNo, String
+            reports, String date, String time) {
         ContentValues cv = new ContentValues();
         cv.put("USERNAME", AppGlobal.userName);
         cv.put("FULLNAME", fullName);
