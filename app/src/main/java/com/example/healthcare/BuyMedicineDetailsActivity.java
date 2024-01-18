@@ -156,16 +156,22 @@ public class BuyMedicineDetailsActivity extends AppCompatActivity {
                         }
 
                     } else {
-                        boolean isAdded = db.addToCart(strMedName, Integer.parseInt(medQuantity.getText().toString()), Float.parseFloat(Integer.toString(intMedPrice)));
 
-                        if (isAdded) {
-                            Toast.makeText(getApplicationContext(), "Added Success", Toast.LENGTH_SHORT).show();
-                            finish();
+                        int intMedQTY = Integer.parseInt(medQuantity.getText().toString());
+
+                        if (intMedQTY > 0) {
+                            boolean isAdded = db.addToCart(strMedName, intMedQTY, Float.parseFloat(Integer.toString(intMedPrice)));
+
+                            if (isAdded) {
+                                Toast.makeText(getApplicationContext(), "Added Success", Toast.LENGTH_SHORT).show();
+                                finish();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Error in Adding item", Toast.LENGTH_SHORT).show();
+                            }
                         } else {
-                            Toast.makeText(getApplicationContext(), "Error in Adding item", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Quantity must be greater than 0", Toast.LENGTH_SHORT).show();
                         }
                     }
-
 
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
