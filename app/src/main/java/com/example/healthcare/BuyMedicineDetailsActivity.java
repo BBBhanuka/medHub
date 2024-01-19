@@ -163,10 +163,10 @@ public class BuyMedicineDetailsActivity extends AppCompatActivity {
                             boolean isAdded = db.addToCart(strMedName, intMedQTY, Float.parseFloat(Integer.toString(intMedPrice)));
 
                             if (isAdded) {
-                                Toast.makeText(getApplicationContext(), "Added Success", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Medicine added successfully", Toast.LENGTH_SHORT).show();
                                 finish();
                             } else {
-                                Toast.makeText(getApplicationContext(), "Error in Adding item", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Error in adding medicine", Toast.LENGTH_SHORT).show();
                             }
                         } else {
                             Toast.makeText(getApplicationContext(), "Quantity must be greater than 0", Toast.LENGTH_SHORT).show();
