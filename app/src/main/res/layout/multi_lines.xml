@@ -33,7 +33,7 @@
         <TextView
             android:id="@+id/line_c"
             android:layout_width="0dp"
-            android:layout_weight="0.20"
+            android:layout_weight="0.40"
             android:layout_height="wrap_content"
 
             android:textColor="#ffff66"
@@ -42,7 +42,7 @@
         <TextView
             android:id="@+id/line_d"
             android:layout_width="0dp"
-            android:layout_weight="0.5"
+            android:layout_weight="0.3"
             android:layout_height="wrap_content"
 
             android:textColor="#ffff66"
@@ -54,7 +54,10 @@
             android:layout_weight="0.3"
             android:layout_height="wrap_content"
             android:textColor="#ffff66"
+            android:textAlignment="viewEnd"
+
             android:textSize="12sp"/>
+
 
     </LinearLayout>
 
