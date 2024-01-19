@@ -293,10 +293,7 @@ public class Database extends SQLiteOpenHelper {
                     isDataAdded = true;
                 }
             }
-
-
         }
-
 
         if (isHeaderAdded && isDataAdded) {
             return true;
@@ -304,8 +301,13 @@ public class Database extends SQLiteOpenHelper {
         } else {
             return false;
         }
+    }
 
 
+    public Cursor getOrderDetails(String userName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor result = db.query("ORDER_HEADER", new String[]{"FULLNAME", "ADDRESS", "CONTACTNO", "MEDCOUNT" , "AMOUNT" }, "USERNAME = ?", new String[]{userName}, null, null, null);
+        return result;
     }
 
 
