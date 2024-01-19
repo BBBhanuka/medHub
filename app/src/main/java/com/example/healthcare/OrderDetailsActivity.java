@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +28,8 @@ public class OrderDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_details);
+
+        Database db = new Database(getApplicationContext());
 
         btn = findViewById(R.id.buttonMODBack);
         lst = findViewById(R.id.listViewMO);
@@ -61,20 +64,23 @@ public class OrderDetailsActivity extends AppCompatActivity {
 //            order_details[i][4] = strData[7];
 //        }
 
+        Cursor data = db.getOrderDetails(AppGlobal.userName);
+
         list = new ArrayList();
-        for (int i=0;i<order_details.length;i++){
+        while (data.moveToNext()) {
             item = new HashMap<String,String>();
-            item.put("line1",order_details[i][0]);
-            item.put("line2",order_details[i][1]);
-            item.put("line3",order_details[i][2]);
-            item.put("line4",order_details[i][3]);
-            item.put("line5",order_details[i][4]);
+            item.put("fullName",data.getString(0));
+            item.put("address",data.getString(1));
+            item.put("contactNo",data.getString(2));
+            item.put("medCount",data.getString(3));
+            item.put("totalAmount",data.getString(4));
             list.add(item);
         }
 
+
         sa = new SimpleAdapter(this,list,
                 R.layout.multi_lines,
-                new String[]{"line1","line2","line3","line4","line5"},
+                new String[]{"fullName","address","contactNo","medCount","totalAmount"},
                 new int[]{R.id.line_a,R.id.line_b,R.id.line_c,R.id.line_d,R.id.line_e});
         lst.setAdapter(sa);
 
